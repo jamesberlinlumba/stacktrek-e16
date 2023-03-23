@@ -1,0 +1,80 @@
+<div class="container" data-th-fragment="task">
+
+    <div data-th-each="task : ${tasks}" class="row" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="card">
+
+<!--            Read-only            -->
+            <div class="card-body" data-th-if="${showEditForm} != ${task.id}">
+                <div class="dropdown position-absolute top-0 end-0">
+                    <button class="btn btn-light btn-sm dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item"
+                               data-th-href="@{/edit-task/{id}(id=${task.id})}">Edit</a></li>
+                        <li>
+                            <form data-th-action="@{/{id}(id=${task.id})}" data-th-method="delete">
+                                <button type="submit" class="dropdown-item">Delete</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <h5 data-th-text="${task.title}" class="card-title"></h5>
+                <h6 data-th-if="${!task.completed}" class="badge text-bg-secondary">New</h6>
+                <h6 data-th-if="${task.completed}" class="badge text-bg-success">Completed</h6>
+                <p data-th-text="${task.description}"
+                   class="card-text"
+                   style="padding-top: 15px; padding-bottom: 20px;">
+                </p>
+            </div>
+
+<!--            Edit            -->
+            <div class="card-body" data-th-if="${showEditForm} == ${task.id}">
+                <form data-th-action="@{/{id}(id=${task.id})}"
+                      data-th-object="${modifiedTask}"
+                      data-th-method="put">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text"
+                               id="title"
+                               name="title"
+                               data-th-value="${task.title}"
+                               class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description"
+                                  name="description"
+                                  data-th-text="${task.description}"
+                                  rows="4"
+                                  class="form-control"></textarea>
+                    </div>
+                    <div class="form-check form-check-reverse" data-th-if="${!task.completed}">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               data-th-value=true
+                               id="completed-false"
+                               name="completed">
+                        <label class="form-check-label" for="completed-false">
+                            Completed
+                        </label>
+                    </div>
+                    <div class="form-check form-check-reverse" data-th-if="${task.completed}">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               data-th-value=false
+                               id="completed-true"
+                               name="completed"
+                               checked>
+                        <label class="form-check-label" for="completed-true">
+                            Completed
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

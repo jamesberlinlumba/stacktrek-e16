@@ -1,0 +1,30 @@
+<div data-th-fragment="form" class="container">
+  <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-grid gap-2 col-4 mx-auto">
+          <a data-th-if="${!showTaskForm}" href="/create-task" class="btn btn-secondary">Create New Task</a>
+        </div>
+        <form data-th-if="${showTaskForm}" data-th-action="@{/}" data-th-object="${task}" method="post">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text"
+                   id="title"
+                   name="title"
+                   data-th-field="*{title}"
+                   class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description"
+                      name="description"
+                      data-th-field="*{description}"
+                      rows="4"
+                      class="form-control"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
